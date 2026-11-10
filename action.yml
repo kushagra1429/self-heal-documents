@@ -1,0 +1,11 @@
+name: Self-Healing Documentation
+description: Detect potentially affected Markdown sections after Python changes
+inputs:
+  base: {description: Base commit SHA, required: true}
+  head: {description: Head commit SHA, required: false, default: HEAD}
+  docs: {description: Markdown paths, required: false, default: 'README.md docs'}
+  report: {description: Report path, required: false, default: self-healing-docs-report.json}
+runs:
+  using: docker
+  image: Dockerfile
+  args: [--repo, /github/workspace, --base, ${{ inputs.base }}, --head, ${{ inputs.head }}, --docs, ${{ inputs.docs }}, --output, ${{ inputs.report }}]

@@ -1,0 +1,21 @@
+name: Documentation Review
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+permissions:
+  contents: read
+jobs:
+  documentation-review:
+    name: Documentation review
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: YOUR_GITHUB_USERNAME/self-healing-docs@v1
+        with:
+          base: ${{ github.event.pull_request.base.sha }}
+          head: ${{ github.event.pull_request.head.sha }}
+          docs: "README.md docs"
+          report: "self-healing-docs-report.json"
